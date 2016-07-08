@@ -9,7 +9,7 @@ logger = Logger.new(STDOUT)
 
 trap('INT') do
   logger.warn 'Interrupted' # => (ThreadError) can't be called from trap context
-  # shutdown gracefully ...
+  # shutdown gracefully ... never executed :(
 end
 ```
 
