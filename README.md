@@ -44,7 +44,7 @@ Or install it yourself as:
 ## Usage
 
 Setting up a signal handler:
-```
+```ruby
 require 'mimi/signal'
 
 Mimi::Signal.trap('INT') do
@@ -53,7 +53,7 @@ end
 ```
 
 Setting up multiple signal handlers:
-```
+```ruby
 require 'mimi/signal'
 
 Mimi::Signal.trap('INT', 'TERM') do
@@ -66,7 +66,7 @@ end
 ```
 
 Stopping the signal handlers, untrapping the previously trapped signals:
-```
+```ruby
 require 'mimi/signal'
 
 Mimi::Signal.trap('TERM') do
