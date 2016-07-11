@@ -25,20 +25,26 @@ module Mimi
 
     private
 
+    # Creates a signal handler and installs it.
+    #
+    # @see Mimi::Signal.trap
+    #
     def initialize(signal, &block)
       self.class.handlers[signal.to_sym] ||= { old_trap: nil, blocks: [] }
       self.class.handlers[signal.to_sym][:blocks].push(block)
       self.class.handlers[signal.to_sym][:old_trap] ||=
-        Kernel.trap(signal) do
-          puts "#{self} got signal #{signal}"
-          self.class.queue << signal.to_sym
-        end
+        Kernel.trap(signal) { self.class.queue << signal.to_sym }
       self.class.start
     end
 
     # Traps a signal (or multiple signals) and installs the signal handler
     #
     # @param [Array<String,Symbol>] signals
+    #
+    # @example
+    #   Mimi::Signal.trap('INT', 'TERM') do
+    #     # graceful shutdown
+    #   end
     #
     def self.trap(*signals, &block)
       signals.each { |s| new(s, &block) }
